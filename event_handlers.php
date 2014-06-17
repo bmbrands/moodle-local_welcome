@@ -64,7 +64,7 @@ function send_welcome($user) {
             $user->lastname,
             $user->email,
             $user->city,
-            get_string($user->country, 'countries'));
+            get_string(((empty($user->country)) ? 'UK' : $user->country) , 'countries') );
 
         $message_user = str_replace($fields, $values, $message_user);
         $message_user_subject = str_replace($fields, $values, $message_user_subject);
