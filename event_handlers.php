@@ -36,23 +36,46 @@ function send_welcome($user) {
     if (!empty($user->email)) {
 
         $moderator->email = get_config('local_welcome', 'moderator_email');
+
         $sender->email = get_config('local_welcome', 'sender_email');
         $sender->firstname = get_config('local_welcome', 'sender_firstname');
         $sender->lastname = get_config('local_welcome', 'sender_lastname');
+
         $message_user_enabled = get_config('local_welcome', 'message_user_enabled');
         $message_user = get_config('local_welcome', 'message_user');
         $message_user_subject = get_config('local_welcome', 'message_user_subject');
+
         $message_moderator_enabled = get_config('local_welcome', 'message_moderator_enabled');
         $message_moderator = get_config('local_welcome', 'message_moderator');
         $message_moderator_subject = get_config('local_welcome', 'message_moderator_subject');
 
-        $tag = '[[user]]';
-        $replacement = $user->firstname . ' ' . $user->lastname;
+        if (!empty($user->country)) {
+            $user->country = get_string($user->country, 'countries');
+        } else {
+            $user->country = '';
+        }
 
-        $message_user = str_replace($tag, $replacement, $message_user);
-        $message_user_subject = str_replace($tag, $replacement, $message_user_subject);
-        $message_moderator = str_replace($tag, $replacement, $message_moderator);
-        $message_moderator_subject = str_replace($tag, $replacement, $message_moderator_subject);
+        $fields = array(
+        	'[[fullname]]',
+        	'[[username]]',
+        	'[[firstname]]',
+        	'[[lastname]]',
+        	'[[email]]',
+        	'[[city]]',
+            '[[country]]');
+        $values = array(
+            fullname($user),
+            $user->username,
+            $user->firstname,
+            $user->lastname,
+            $user->email,
+            $user->city,
+            $user->country);
+
+        $message_user = str_replace($fields, $values, $message_user);
+        $message_user_subject = str_replace($fields, $values, $message_user_subject);
+        $message_moderator = str_replace($fields, $values, $message_moderator);
+        $message_moderator_subject = str_replace($fields, $values, $message_moderator_subject);
 
         if (!empty($message_user) && !empty($sender->email) && $message_user_enabled) {
             email_to_user($user, $sender, $message_user_subject, $message_user, $message_user);
