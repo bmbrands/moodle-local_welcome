@@ -89,11 +89,11 @@ function send_welcome($user) {
         $message_moderator_subject = str_replace($fields, $values, $message_moderator_subject);
 
         if (!empty($message_user) && !empty($sender->email) && $message_user_enabled) {
-            email_to_user($user, $sender, $message_user_subject, $message_user, $message_user);
+            email_to_user($user, $sender, $message_user_subject, html_to_text($message_user), $message_user);
         }
 
         if (!empty($message_moderator) && !empty($sender->email) && $message_moderator_enabled) {
-            email_to_user($moderator, $sender, $message_moderator_subject, $message_moderator, $message_moderator);
+            email_to_user($moderator, $sender, $message_moderator_subject, html_to_text($message_moderator), $message_moderator);
         }
 
     }
