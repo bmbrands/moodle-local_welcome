@@ -1,5 +1,4 @@
-
-copyright  2013 Bas Brands, Basbrands.nl
+copyright  2014 Bas Brands, Basbrands.nl
 author     Bas Brands bas@sonsbeekmedia.nl
 license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
@@ -16,10 +15,29 @@ SETTINGS
 This local plugin allows you to configure:
 
 The email message / subject to the new user
-
 The email message / subject for the moderator / admin
 The email address for the moderator / admin
 The firstname / lastname of the admin
+
+
+SAMPLE MESSAGE
+
+    Welcome [[fullname]]
+
+    Your Moodle account has been created and you're ready to go! Your account has
+    been created with the following details:
+
+    Name: [[fullname]],
+    Username: [[username]],
+    Firstname: [[firstname]],
+    Lastname: [[lastname]],
+    Email: [[email]],
+    City: [[city]],
+    Country: [[country]]
+
+    Feel free to reach out to us at any time through our email, on twitter or google+
+
+    Cheers,
 
 
 INSTALLATION

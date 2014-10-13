@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of the Local welcome plugin
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,38 +22,43 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2013 Bas Brands, Basbrands.nl
- * @author     Bas Brands bas@sonsbeekmedia.nl
+ * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 function send_welcome($user) {
-    global $CFG;
+    global $CFG, $SITE;
 
     $moderator = get_admin();
     $sender = get_admin();
 
     if (!empty($user->email)) {
 
-        $moderator->email = get_config('local_welcome', 'moderator_email');
+        $config = get_config('local_welcome');
 
-        $sender->email = get_config('local_welcome', 'sender_email');
-        $sender->firstname = get_config('local_welcome', 'sender_firstname');
-        $sender->lastname = get_config('local_welcome', 'sender_lastname');
+        $moderator->email = $config->moderator_email;
 
-        $message_user_enabled = get_config('local_welcome', 'message_user_enabled');
-        $message_user = get_config('local_welcome', 'message_user');
-        $message_user_subject = get_config('local_welcome', 'message_user_subject');
+        $sender->email = $config->sender_email;
+        $sender->firstname = $config->sender_firstname;
+        $sender->lastname = $config->sender_lastname;
 
-        $message_moderator_enabled = get_config('local_welcome', 'message_moderator_enabled');
-        $message_moderator = get_config('local_welcome', 'message_moderator');
-        $message_moderator_subject = get_config('local_welcome', 'message_moderator_subject');
+        $message_user_enabled = $config->message_user_enabled;
+        $message_user = $config->message_user;
+        $message_user_subject = $config->message_user_subject;
+
+        $message_moderator_enabled = $config->message_moderator_enabled;
+        $message_moderator = $config->message_moderator;
+        $message_moderator_subject = $config->message_moderator_subject;
+
 
         if (!empty($user->country)) {
             $user->country = get_string($user->country, 'countries');
         } else {
             $user->country = '';
         }
+
+        $sitelink = html_writer::link(new moodle_url('/'), $SITE->fullname);
+        $resetpasswordlink = html_writer::link(new moodle_url('/login/forgot_password.php'), get_string('resetpass', 'local_welcome'));
 
         $fields = array(
         	'[[fullname]]',
@@ -62,7 +67,10 @@ function send_welcome($user) {
         	'[[lastname]]',
         	'[[email]]',
         	'[[city]]',
-            '[[country]]');
+            '[[country]]',
+            '[[sitelink]]',
+            '[[sitename]]',
+            '[[resetpasswordlink]]');
         $values = array(
             fullname($user),
             $user->username,
@@ -70,7 +78,10 @@ function send_welcome($user) {
             $user->lastname,
             $user->email,
             $user->city,
-            $user->country);
+            $user->country,
+            $sitelink,
+            $SITE->fullname,
+            $resetpasswordlink);
 
         $message_user = str_replace($fields, $values, $message_user);
         $message_user_subject = str_replace($fields, $values, $message_user_subject);

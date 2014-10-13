@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of the Local welcome plugin
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,6 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * This plugin sends users a welcome message after logging in
+ * and notify a moderator a new user has been added
+ * it has a settings page that allow you to configure the messages
+ * send.
+ *
+ * @package    local
+ * @subpackage welcome
+ * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -50,7 +62,7 @@ if ($hassiteconfig) {
     $setting = new admin_setting_configcheckbox($name, $title, $description, 1);
     $settings->add($setting);
 
-    $default = get_string('default_user_email_subject', 'local_welcome', $site->fullname);
+    $default = get_string('default_moderator_email_subject', 'local_welcome', $site->fullname);
     $name = 'local_welcome/message_moderator_subject';
     $title = get_string('message_moderator_subject', 'local_welcome');
     $description = get_string('message_moderator_subject_desc', 'local_welcome');

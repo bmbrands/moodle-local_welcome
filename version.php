@@ -1,5 +1,6 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
+// This file is part of the Local welcome plugin
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,8 +23,7 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2013 Bas Brands, Basbrands.nl
- * @author     Bas Brands bmbrands@gmail.com
+ * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
