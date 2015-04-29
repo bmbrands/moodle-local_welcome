@@ -27,6 +27,8 @@
  */
 
 $string['pluginname'] = 'Moodle welcome';
+$string['auth_plugins'] = 'Auth plugins';
+$string['auth_plugins_desc'] = 'Choose the auth plugins for which a welcome message should be send';
 $string['message_user_enabled'] = 'Enable user messages';
 $string['message_user_enabled_desc'] = 'This tickbox enables the sending of welcome messages to new users';
 $string['message_user_subject'] = 'User subject';
