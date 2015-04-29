@@ -2,6 +2,13 @@ copyright  2014 Bas Brands, Basbrands.nl
 author     Bas Brands bas@sonsbeekmedia.nl
 license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
+CHANGES
+version 2015042900:
+
+Added an option to select the authentication methods that will trigger a 
+welcome message. This way you can use the welcome plugin for manual authentication
+an disable it for (for example) email based self registration.
+
 ABOUT
 
 This plugin for Moodle sends a configurable welcome message to new users.
