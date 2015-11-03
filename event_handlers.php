@@ -39,6 +39,15 @@ function send_welcome($user) {
 
         $moderator = clone($sender);
 
+        if (!empty($config->auth_plugins)) {
+            $auths = explode(',', $config->auth_plugins);
+            if (!in_array($user->auth, $auths)) {
+                return '';
+            }
+        } else {
+            return '';
+        }
+
         $moderator->email = $config->moderator_email;
 
         $sender->email = $config->sender_email;

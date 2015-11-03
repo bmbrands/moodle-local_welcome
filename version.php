@@ -30,3 +30,4 @@ $plugin->version  = 2015110300;
 $plugin->requires = 2012120300;
 $plugin->release = '1.1';
 $plugin->maturity = MATURITY_STABLE;
+$plugin->component = 'local_welcome';

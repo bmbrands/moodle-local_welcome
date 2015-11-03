@@ -44,6 +44,17 @@ if ($hassiteconfig) {
     $setting = new admin_setting_configcheckbox($name, $title, $description, 1);
     $settings->add($setting);
 
+    $name = 'local_welcome/auth_plugins';
+    $title = get_string('auth_plugins', 'local_welcome');
+    $description = get_string('auth_plugins_desc', 'local_welcome');
+    $auths = get_enabled_auth_plugins();
+    $authlist = array();
+    foreach ($auths as $auth) {
+        $authlist[$auth] = $auth;
+    }
+    $setting = new admin_setting_configmulticheckbox($name, $title, $description, 1, $authlist);
+    $settings->add($setting);
+
     $name = 'local_welcome/message_user_subject';
     $default = get_string('default_user_email_subject', 'local_welcome', $site->fullname);
     $title = get_string('message_user_subject', 'local_welcome');

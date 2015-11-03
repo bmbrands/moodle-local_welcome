@@ -66,7 +66,6 @@ foreach ($welcome->welcomefields as $field) {
     $tablewelcome->data[] = array('[['.$field.']]', $welcome->welcomevalues[$field]);
 }
 
-
 // Moodle default user template Fields.
 $tabledefault = new html_table();
 $tabledefault->head = $tableheader;
