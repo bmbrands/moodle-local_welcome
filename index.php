@@ -32,8 +32,9 @@ require_once($CFG->dirroot . '/local/welcome/locallib.php');
 $context = context_system::instance();
 
 require_login();
-
-
+if (!is_siteadmin()) {
+    return '';
+}
 $welcome = new local_welcome();
 
 $PAGE->set_context($context);
