@@ -22,7 +22,7 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,9 +36,11 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('local_welcome', get_string('pluginname', 'local_welcome'));
     $ADMIN->add('localplugins', $settings);
 
+    $availablefields = new moodle_url('/local/welcome/index.php');
+
     $name = 'local_welcome/message_user_enabled';
     $title = get_string('message_user_enabled', 'local_welcome');
-    $description = get_string('message_user_enabled_desc', 'local_welcome');
+    $description = get_string('message_user_enabled_desc', 'local_welcome', $availablefields->out());
     $setting = new admin_setting_configcheckbox($name, $title, $description, 1);
     $settings->add($setting);
 

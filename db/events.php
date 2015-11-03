@@ -22,7 +22,7 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

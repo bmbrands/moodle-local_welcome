@@ -1,5 +1,4 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
 // This file is part of the Local welcome plugin
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,11 +22,11 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->version  = 2014101300;
+$plugin->version  = 2015110300;
 $plugin->requires = 2012120300;
-$plugin->release = '1.0 (Build: 2013101100)';
+$plugin->release = '1.1';
 $plugin->maturity = MATURITY_STABLE;

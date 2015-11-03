@@ -22,15 +22,30 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'Moodle welcome';
+$string['fieldname'] = 'Fieldname';
+$string['type'] = 'Type';
+$string['yourvalue'] = 'Your Value';
+$string['customprofilefields'] = 'Custom profile fields';
+$string['defaultprofilefields'] = 'Default profile fields';
+$string['welcomefields'] = 'Additional template fields';
+$string['globalhelp'] = 'This plugin for Moodle sends a configurable welcome message to new users.
+<br><br>
+The plugin uses the event system in Moodle and will be triggerd when a new
+user is created, no matter if this was a manually created account or an
+account created using self registration.<br>
+<br>
+The tables on this page show the available profile fields that can be used in the message template on this plugin\'s configuration page.
+The values shown in this table are YOUR profile field values, they will be replaced by the recipients values when the welcome email is send.';
+$string['configure'] = 'Configure this plugin';
 $string['message_user_enabled'] = 'Enable user messages';
-$string['message_user_enabled_desc'] = 'This tickbox enables the sending of welcome messages to new users';
+$string['message_user_enabled_desc'] = 'This tickbox enables the sending of welcome messages to new users<br><br>Visit <a href="{$a}">this page to see the list of available fields</a>';
 $string['message_user_subject'] = 'User subject';
-$string['message_user_subject_desc'] = 'This will be the subject of the email send to the user. Use [[fullname]] as a tag, this will be replace with the users Firstname Lastname.';
+$string['message_user_subject_desc'] = 'This will be the subject of the email send to the user. Use [[fullname]] as a tag, this will be replaced with the users Firstname Lastname.';
 $string['message_user'] = 'User message';
 $string['message_user_desc'] = 'Message send to new users';
 
@@ -38,7 +53,7 @@ $string['message_moderator_enabled'] = 'Enable moderator messages';
 $string['message_moderator_enabled_desc'] = 'This tickbox enables the sending of notification messages to moderators';
 $string['message_moderator'] = 'Moderator message';
 $string['message_moderator_subject'] = 'Moderator subject';
-$string['message_moderator_subject_desc'] = 'This will be the subject of the email send to the moderator. Use [[fullname]] as a tag, this wil be replace with the users Firstname Lastname.';
+$string['message_moderator_subject_desc'] = 'This will be the subject of the email send to the moderator. Use [[fullname]] as a tag, this wil be replaced with the users Firstname Lastname.';
 $string['message_moderator_desc'] = 'Message send to moderators';
 $string['moderator_email'] = 'Moderator email';
 $string['moderator_email_desc'] = 'New user notifications are send to this email address';

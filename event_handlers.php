@@ -22,19 +22,22 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2014 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 function send_welcome($user) {
     global $CFG, $SITE;
 
-    $moderator = get_admin();
+    require_once($CFG->dirroot . '/local/welcome/locallib.php');
+
     $sender = get_admin();
 
     if (!empty($user->email)) {
 
         $config = get_config('local_welcome');
+
+        $moderator = clone($sender);
 
         $moderator->email = $config->moderator_email;
 
@@ -50,43 +53,12 @@ function send_welcome($user) {
         $message_moderator = $config->message_moderator;
         $message_moderator_subject = $config->message_moderator_subject;
 
+        $welcome = new local_welcome();
 
-        if (!empty($user->country)) {
-            $user->country = get_string($user->country, 'countries');
-        } else {
-            $user->country = '';
-        }
-
-        $sitelink = html_writer::link(new moodle_url('/'), $SITE->fullname);
-        $resetpasswordlink = html_writer::link(new moodle_url('/login/forgot_password.php'), get_string('resetpass', 'local_welcome'));
-
-        $fields = array(
-        	'[[fullname]]',
-        	'[[username]]',
-        	'[[firstname]]',
-        	'[[lastname]]',
-        	'[[email]]',
-        	'[[city]]',
-            '[[country]]',
-            '[[sitelink]]',
-            '[[sitename]]',
-            '[[resetpasswordlink]]');
-        $values = array(
-            fullname($user),
-            $user->username,
-            $user->firstname,
-            $user->lastname,
-            $user->email,
-            $user->city,
-            $user->country,
-            $sitelink,
-            $SITE->fullname,
-            $resetpasswordlink);
-
-        $message_user = str_replace($fields, $values, $message_user);
-        $message_user_subject = str_replace($fields, $values, $message_user_subject);
-        $message_moderator = str_replace($fields, $values, $message_moderator);
-        $message_moderator_subject = str_replace($fields, $values, $message_moderator_subject);
+        $message_user = $welcome->replace_values($user, $message_user);
+        $message_user_subject = $welcome->replace_values($user, $message_user_subject);
+        $message_moderator = $welcome->replace_values($user, $message_moderator);
+        $message_moderator_subject = $welcome->replace_values($user, $message_moderator_subject);
 
         if (!empty($message_user) && !empty($sender->email) && $message_user_enabled) {
             email_to_user($user, $sender, $message_user_subject, html_to_text($message_user), $message_user);
@@ -95,6 +67,5 @@ function send_welcome($user) {
         if (!empty($message_moderator) && !empty($sender->email) && $message_moderator_enabled) {
             email_to_user($moderator, $sender, $message_moderator_subject, html_to_text($message_moderator), $message_moderator);
         }
-
     }
 }
