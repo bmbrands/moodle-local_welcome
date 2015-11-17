@@ -1,0 +1,11 @@
+{
+    "name": "bmbrands/moodle-local_welcome",
+    "description": "This plugin sends a configurable welcome message to new users and notifies the admin",
+    "type": "moodle-local",
+    "require": {
+        "composer/installers": "*"
+    },
+    "extra": {
+      "installer-name": "welcome"
+    }
+}
