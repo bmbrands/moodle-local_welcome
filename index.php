@@ -27,7 +27,6 @@
  */
 
 require_once '../../config.php';
-require_once($CFG->dirroot . '/local/welcome/locallib.php');
 
 $context = context_system::instance();
 
@@ -35,7 +34,7 @@ require_login();
 if (!is_siteadmin()) {
     return '';
 }
-$welcome = new local_welcome();
+$welcome = new \local_welcome\message();
 
 $PAGE->set_context($context);
 $PAGE->set_url('/local/welcome/index.php.php');
