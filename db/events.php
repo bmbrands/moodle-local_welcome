@@ -26,10 +26,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$handlers = array(
-    'user_created' => array (
-        'handlerfile'     => '/local/welcome/event_handlers.php',
-        'handlerfunction' => 'send_welcome',
-        'schedule'        => 'instant',
+$observers = array(
+    array(
+        'eventname' => '\core\event\user_created',
+        'callback' => '\local_welcome\observer::send_welcome',
     ),
 );
