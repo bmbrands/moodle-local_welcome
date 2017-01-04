@@ -22,11 +22,11 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once '../../config.php';
+require_once('../../config.php');
 
 $context = context_system::instance();
 
@@ -50,7 +50,7 @@ $tableheader = array(
 $customfields = $welcome->customfields;
 $customvalues = $welcome->get_user_custom_values($USER);
 
-// Custom profile Fields
+// Custom profile Fields.
 $tablecustom = new html_table();
 $tablecustom->head = $tableheader;
 

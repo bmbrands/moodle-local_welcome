@@ -22,9 +22,11 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
 
 $observers = array(
     array(

@@ -1,9 +1,15 @@
-copyright  2015 Bas Brands, Basbrands.nl
+copyright  2017 Bas Brands, Basbrands.nl
 author     Bas Brands bas@sonsbeekmedia.nl
 license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 
 CHANGES
+
+CHANGES
+version 2017010400:
+
+Updated to API event handlers version 2 for Moodle 3.1 and newer. Thanks to Nadav Kavalerchik!
+
 version 2015100300:
 
 All profile fields / custom profile fields are now available for usage. To see

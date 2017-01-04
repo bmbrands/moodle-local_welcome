@@ -16,12 +16,15 @@
 
 /**
  * @package    local_welcome
- * @copyright  2015 Bas Brands
+ * @copyright  2017 Bas Brands
  * @author     Bas Brands, basbrands.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_welcome;
+
+defined('MOODLE_INTERNAL') || die();
+
 global $CFG;
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/user/lib.php');
@@ -79,7 +82,7 @@ class message {
             }
             if (!empty($user->$field) && $field == 'country') {
                 $values[$field]  = get_string($user->country, 'countries');
-            } 
+            }
         }
         return $values;
     }
@@ -87,7 +90,7 @@ class message {
     public function get_user_custom_values($user) {
         $userinfo = profile_user_record($user->id);
         $values = array();
-        foreach($this->customfields as $field) {
+        foreach ($this->customfields as $field) {
             $fieldname = $field;
             if (isset($userinfo->$fieldname)) {
                 $values[$field] = $userinfo->$fieldname;
@@ -104,9 +107,10 @@ class message {
         $values = array();
         $sitelink = \html_writer::link(new \moodle_url('/'), $SITE->fullname);
         $sitename = $SITE->fullname;
-        $resetpasswordlink = \html_writer::link(new \moodle_url('/login/forgot_password.php'), get_string('resetpass', 'local_welcome'));
+        $resetpasswordlink = \html_writer::link(
+            new \moodle_url('/login/forgot_password.php'), get_string('resetpass', 'local_welcome'));
         foreach ($this->welcomefields as $field) {
-            $values[$field]= $$field;
+            $values[$field] = $$field;
         }
         return $values;
     }

@@ -22,11 +22,12 @@
  *
  * @package    local
  * @subpackage welcome
- * @copyright  2015 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_welcome;
+
 defined('MOODLE_INTERNAL') || die();
 
 class observer {
@@ -34,7 +35,9 @@ class observer {
     public static function send_welcome(\core\event\user_created $event) {
         global $CFG, $SITE;
 
-        $user = \core_user::get_user($event->userid);
+        $eventdata = $event->get_data();
+
+        $user = \core_user::get_user($eventdata['objectid']);
 
         $sender = get_admin();
 
@@ -59,27 +62,28 @@ class observer {
             $sender->firstname = $config->sender_firstname;
             $sender->lastname = $config->sender_lastname;
 
-            $message_user_enabled = $config->message_user_enabled;
-            $message_user = $config->message_user;
-            $message_user_subject = $config->message_user_subject;
+            $messageuserenabled = $config->message_user_enabled;
+            $messageuser = $config->message_user;
+            $messageusersubject = $config->message_user_subject;
 
-            $message_moderator_enabled = $config->message_moderator_enabled;
-            $message_moderator = $config->message_moderator;
-            $message_moderator_subject = $config->message_moderator_subject;
+            $messagemoderatorenabled = $config->message_moderator_enabled;
+            $messagemoderator = $config->message_moderator;
+            $messagemoderatorsubject = $config->message_moderator_subject;
 
-            $welcome = new local_welcome();
+            $welcome = new \local_welcome\message();
 
-            $message_user = $welcome->replace_values($user, $message_user);
-            $message_user_subject = $welcome->replace_values($user, $message_user_subject);
-            $message_moderator = $welcome->replace_values($user, $message_moderator);
-            $message_moderator_subject = $welcome->replace_values($user, $message_moderator_subject);
+            $messageuser = $welcome->replace_values($user, $messageuser);
+            $messageusersubject = $welcome->replace_values($user, $messageusersubject);
+            $messagemoderator = $welcome->replace_values($user, $messagemoderator);
+            $messagemoderatorsubject = $welcome->replace_values($user, $messagemoderatorsubject);
 
-            if (!empty($message_user) && !empty($sender->email) && $message_user_enabled) {
-                email_to_user($user, $sender, $message_user_subject, html_to_text($message_user), $message_user);
+            if (!empty($messageuser) && !empty($sender->email) && $messageuserenabled) {
+                email_to_user($user, $sender, $messageusersubject, html_to_text($messageuser), $messageuser);
             }
 
-            if (!empty($message_moderator) && !empty($sender->email) && $message_moderator_enabled) {
-                email_to_user($moderator, $sender, $message_moderator_subject, html_to_text($message_moderator), $message_moderator);
+            if (!empty($messagemoderator) && !empty($sender->email) && $messagemoderatorenabled) {
+                email_to_user($moderator, $sender, $messagemoderatorsubject,
+                    html_to_text($messagemoderator), $messagemoderator);
             }
         }
     }
