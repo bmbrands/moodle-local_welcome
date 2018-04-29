@@ -1,0 +1,10 @@
+{
+    "name": "bmbrands/moodle-local_welcome",
+    "type": "moodle-local",
+    "require": {
+        "composer/installers": "~1.0"
+    },
+    "extra": {
+        "installer-name": "welcome"
+    }
+}
