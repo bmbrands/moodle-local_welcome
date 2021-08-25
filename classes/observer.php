@@ -41,6 +41,11 @@ class observer {
 
         $sender = get_admin();
 
+        // Sender can be false when unit tests are running.
+        if ($sender === false) {
+            return;
+        }
+
         if (!empty($user->email)) {
 
             $config = get_config('local_welcome');
