@@ -101,4 +101,4 @@ $string['default_moderator_email'] = '
 </html>';
 
 $string['resetpass'] = 'Reset your password here';
-
+$string['privacy:metadata'] = 'This plugin only sends a welcome email. It does not store any personal data.';
