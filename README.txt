@@ -2,10 +2,11 @@ copyright  2017 Bas Brands, Basbrands.nl
 author     Bas Brands bas@sonsbeekmedia.nl
 license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
-
 CHANGES
+version 2021082600:
 
-CHANGES
+Privacy provider implementation by Cameron Ball.
+
 version 2017010400:
 
 Updated to API event handlers version 2 for Moodle 3.1 and newer. Thanks to Nadav Kavalerchik!
