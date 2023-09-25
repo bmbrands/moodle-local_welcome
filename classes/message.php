@@ -88,14 +88,18 @@ class message {
     }
 
     public function get_user_custom_values($user) {
-        $userinfo = profile_user_record($user->id);
+        $userinfo = profile_get_user_fields_with_data($user->id);
         $values = array();
+
         foreach ($this->customfields as $field) {
-            $fieldname = $field;
-            if (isset($userinfo->$fieldname)) {
-                $values[$field] = $userinfo->$fieldname;
-            } else {
-                $values[$field] = '';
+            $values[$field] = '';
+
+            foreach ($userinfo as $uio) {
+                if ($uio->field->shortname == $field) {
+                    $values[$field] = $uio->display_data();
+                    break;
+                }
+
             }
         }
         return $values;
