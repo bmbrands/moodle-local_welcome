@@ -24,6 +24,7 @@
 
 $string['auth_plugins'] = 'Auth plugins';
 $string['auth_plugins_desc'] = 'Choose the auth plugins for which a welcome message should be send';
+$string['auth_template_heading'] = 'Email template used for users with {$a} authentication';
 $string['configure'] = 'Configure this plugin';
 $string['customprofilefields'] = 'Custom profile fields';
 $string['default_moderator_email'] = '

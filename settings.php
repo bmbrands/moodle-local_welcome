@@ -50,25 +50,36 @@ if ($hassiteconfig) {
     $setting = new admin_setting_configmulticheckbox($name, $title, $description, 1, $authlist);
     $settings->add($setting);
 
-    $name = 'local_welcome/message_user_subject';
-    $default = get_string('default_user_email_subject', 'local_welcome', $site->fullname);
-    $title = get_string('message_user_subject', 'local_welcome');
-    $description = get_string('message_user_subject_desc', 'local_welcome');
-    $setting = new admin_setting_configtext($name, $title, $description, $default);
-    $settings->add($setting);
-
-    $default = get_string('default_user_email', 'local_welcome', $site->fullname);
-    $name = 'local_welcome/message_user';
-    $title = get_string('message_user', 'local_welcome');
-    $description = get_string('message_user_desc', 'local_welcome');
-    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
-    $settings->add($setting);
-
     $name = 'local_welcome/message_moderator_enabled';
     $title = get_string('message_moderator_enabled', 'local_welcome');
     $description = get_string('message_moderator_enabled_desc', 'local_welcome');
     $setting = new admin_setting_configcheckbox($name, $title, $description, 1);
     $settings->add($setting);
+
+    foreach ($authlist as $auth) {
+        $title = get_string('auth_template_heading', 'local_welcome', $auth);
+        $name = "local_welcome/auth_template_heading_$auth";
+        $section = new admin_setting_heading($name, $auth, $title);
+        $settings->add($section);
+
+        $name = 'local_welcome/message_user_subject_' . $auth;
+        $default = get_string('default_user_email_subject', 'local_welcome', $site->fullname);
+        $title = get_string('message_user_subject', 'local_welcome');
+        $description = get_string('message_user_subject_desc', 'local_welcome');
+        $setting = new admin_setting_configtext($name, $title, $description, $default);
+        $settings->add($setting);
+
+        $default = get_string('default_user_email', 'local_welcome', $site->fullname);
+        $name = 'local_welcome/message_user_' . $auth;
+        $title = get_string('message_user', 'local_welcome');
+        $description = get_string('message_user_desc', 'local_welcome');
+        $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+        $settings->add($setting);
+    }
+
+    $title = get_string('message_moderator', 'local_welcome');
+    $section = new admin_setting_heading('moderator', 'moderator', $title);
+    $settings->add($section);
 
     $default = get_string('default_moderator_email_subject', 'local_welcome', $site->fullname);
     $name = 'local_welcome/message_moderator_subject';

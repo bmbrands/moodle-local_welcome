@@ -81,8 +81,8 @@ class observer {
         $sender->lastname = $config->sender_lastname;
 
         $messageuserenabled = $config->message_user_enabled;
-        $messageuser = $config->message_user;
-        $messageusersubject = $config->message_user_subject;
+        $messageuser = $config->{'message_user_' . $user->auth};
+        $messageusersubject = $config->{'message_user_subject_' . $user->auth};
 
         $messagemoderatorenabled = $config->message_moderator_enabled;
         $messagemoderator = $config->message_moderator;
