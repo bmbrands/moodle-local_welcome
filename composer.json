@@ -1,0 +1,13 @@
+{
+    "name": "bmbrands/local_welcome",
+    "version": "2.2",
+    "type": "moodle-local",
+    "homepage": "https://moodle.org/plugins/welcome",
+    "requires": {
+        "composer/installers": "^1.0 || ^2.0",
+        "moodle/moodle": "3.*||4.*"
+    },
+    "extra": {
+        "installer-name": "welcome"
+    }
+}
