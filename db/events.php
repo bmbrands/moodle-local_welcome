@@ -15,22 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This plugin sends users a welcome message after logging in
- * and notify a moderator a new user has been added
- * it has a settings page that allow you to configure the messages
- * send.
+ * Event observers for local_welcome.
  *
- * @package    local
- * @subpackage welcome
+ * @package    local_welcome
  * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-    array(
+$observers = [
+    [
         'eventname' => '\core\event\user_created',
-        'callback' => '\local_welcome\observer::send_welcome',
-    ),
-);
+        'callback'  => '\local_welcome\observer::send_welcome',
+    ],
+];

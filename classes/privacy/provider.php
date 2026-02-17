@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem implementation for block_enrol_duration.
+ * Privacy Subsystem implementation for local_welcome.
  *
  * @package    local_welcome
  * @author     Cameron Ball <cameron@cameron1729.xyz>
@@ -30,11 +30,12 @@ namespace local_welcome\privacy;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Privacy Subsystem implementation for block_enrol_duration.
+ * Privacy provider for local_welcome.
  *
- * @author    Cameron Ball <cameron@cameron1729.xyz>
- * @copyright 2021 Catalyst IT
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    local_welcome
+ * @author     Cameron Ball <cameron@cameron1729.xyz>
+ * @copyright  2021 Catalyst IT
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {
 

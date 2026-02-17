@@ -15,13 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This plugin sends users a welcome message after logging in
- * and notify a moderator a new user has been added
- * it has a settings page that allow you to configure the messages
- * send.
+ * Available template fields overview page for local_welcome.
  *
- * @package    local
- * @subpackage welcome
+ * @package    local_welcome
  * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -31,13 +27,11 @@ require_once('../../config.php');
 $context = context_system::instance();
 
 require_login();
-if (!is_siteadmin()) {
-    return '';
-}
+require_capability('moodle/site:config', $context);
 $welcome = new \local_welcome\message();
 
 $PAGE->set_context($context);
-$PAGE->set_url('/local/welcome/index.php.php');
+$PAGE->set_url('/local/welcome/index.php');
 $PAGE->set_heading($SITE->fullname);
 $PAGE->set_pagelayout('admin');
 $PAGE->set_title(get_string('pluginname', 'local_welcome'));

@@ -15,21 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This plugin sends users a welcome message after logging in
- * and notify a moderator a new user has been added
- * it has a settings page that allow you to configure the messages
- * send.
+ * Version information for local_welcome.
  *
- * @package    local
- * @subpackage welcome
+ * @package    local_welcome
  * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2021081600;
-$plugin->requires = 2013051400;
-$plugin->release = '2';
+$plugin->version  = 2026021700;
+$plugin->requires = 2024100700;
+$plugin->release = '3.0';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'local_welcome';

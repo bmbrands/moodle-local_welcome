@@ -15,13 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This plugin sends users a welcome message after logging in
- * and notify a moderator a new user has been added
- * it has a settings page that allow you to configure the messages
- * send.
+ * Event observer for local_welcome.
  *
- * @package    local
- * @subpackage welcome
+ * Handles the user_created event to send welcome and moderator
+ * notification emails.
+ *
+ * @package    local_welcome
  * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,9 +29,22 @@ namespace local_welcome;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Observer class for local_welcome events.
+ *
+ * @package    local_welcome
+ * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class observer {
 
-    public static function send_welcome(\core\event\user_created $event) {
+    /**
+     * Send welcome email to a newly created user and optionally notify a moderator.
+     *
+     * @param \core\event\user_created $event The user_created event.
+     * @return void
+     */
+    public static function send_welcome(\core\event\user_created $event): void {
         global $CFG, $SITE;
 
         $eventdata = $event->get_data();
@@ -46,50 +58,51 @@ class observer {
             return;
         }
 
-        if (!empty($user->email)) {
+        if (empty($user->email)) {
+            return;
+        }
 
-            $config = get_config('local_welcome');
+        $config = get_config('local_welcome');
 
-            $moderator = clone($sender);
+        $moderator = clone($sender);
 
-            if (!empty($config->auth_plugins)) {
-                $auths = explode(',', $config->auth_plugins);
-                if (!in_array($user->auth, $auths)) {
-                    return '';
-                }
-            } else {
-                return '';
+        if (!empty($config->auth_plugins)) {
+            $auths = explode(',', $config->auth_plugins);
+            if (!in_array($user->auth, $auths)) {
+                return;
             }
+        } else {
+            return;
+        }
 
-            $moderator->email = $config->moderator_email;
+        $moderator->email = $config->moderator_email;
 
-            $sender->email = $config->sender_email;
-            $sender->firstname = $config->sender_firstname;
-            $sender->lastname = $config->sender_lastname;
+        $sender->email = $config->sender_email;
+        $sender->firstname = $config->sender_firstname;
+        $sender->lastname = $config->sender_lastname;
 
-            $messageuserenabled = $config->message_user_enabled;
-            $messageuser = $config->message_user;
-            $messageusersubject = $config->message_user_subject;
+        $messageuserenabled = $config->message_user_enabled;
+        $messageuser = $config->message_user;
+        $messageusersubject = $config->message_user_subject;
 
-            $messagemoderatorenabled = $config->message_moderator_enabled;
-            $messagemoderator = $config->message_moderator;
-            $messagemoderatorsubject = $config->message_moderator_subject;
+        $messagemoderatorenabled = $config->message_moderator_enabled;
+        $messagemoderator = $config->message_moderator;
+        $messagemoderatorsubject = $config->message_moderator_subject;
 
-            $welcome = new \local_welcome\message();
+        $welcome = new \local_welcome\message();
 
-            $messageuser = $welcome->replace_values($user, $messageuser);
-            $messageusersubject = $welcome->replace_values($user, $messageusersubject);
-            $messagemoderator = $welcome->replace_values($user, $messagemoderator);
-            $messagemoderatorsubject = $welcome->replace_values($user, $messagemoderatorsubject);
+        $messageuser = $welcome->replace_values($user, $messageuser);
+        $messageusersubject = $welcome->replace_values($user, $messageusersubject);
+        $messagemoderator = $welcome->replace_values($user, $messagemoderator);
+        $messagemoderatorsubject = $welcome->replace_values($user, $messagemoderatorsubject);
 
-            if (!empty($messageuser) && !empty($sender->email) && $messageuserenabled) {
-                email_to_user($user, $sender, $messageusersubject, html_to_text($messageuser), $messageuser);
-            }
+        if (!empty($messageuser) && !empty($sender->email) && $messageuserenabled) {
+            email_to_user($user, $sender, $messageusersubject, html_to_text($messageuser), $messageuser);
+        }
 
-            if (!empty($messagemoderator) && !empty($sender->email) && $messagemoderatorenabled) {
-                email_to_user($moderator, $sender, $messagemoderatorsubject,
-                    html_to_text($messagemoderator), $messagemoderator);
-            }
+        if (!empty($messagemoderator) && !empty($sender->email) && $messagemoderatorenabled) {
+            email_to_user($moderator, $sender, $messagemoderatorsubject,
+                html_to_text($messagemoderator), $messagemoderator);
         }
     }
 

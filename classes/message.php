@@ -15,9 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Message template handler for local_welcome.
+ *
+ * Manages template field replacement for welcome emails sent to new users
+ * and moderators. Supports default user fields, custom profile fields,
+ * and site-level welcome fields.
+ *
  * @package    local_welcome
- * @copyright  2017 Bas Brands
- * @author     Bas Brands, basbrands.nl
+ * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,13 +34,30 @@ global $CFG;
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/user/lib.php');
 
+/**
+ * Message template handler class.
+ *
+ * @package    local_welcome
+ * @copyright  2017 Bas Brands, basbrands.nl, bas@sonsbeekmedia.nl
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class message {
 
+    /** @var array Default user profile field names. */
     public $defaultfields;
+
+    /** @var array Welcome template field names (site-level). */
     public $welcomefields;
+
+    /** @var array Welcome template field values. */
     public $welcomevalues;
+
+    /** @var array Custom profile field shortnames. */
     public $customfields;
 
+    /**
+     * Constructor.
+     */
     public function __construct() {
         $this->defaultfields = $this->get_default_fields();
         $this->welcomefields = $this->get_welcome_fields();
@@ -43,24 +65,46 @@ class message {
         $this->customfields = $this->get_custom_fields();
     }
 
+    /**
+     * Get the list of default user fields available for template replacement.
+     *
+     * Uses user_get_default_fields() from core and filters to fields that
+     * are meaningful for welcome email templates.
+     *
+     * @return array List of default user field names.
+     */
+    private function get_default_fields(): array {
+        // Get fields from core and filter to those useful in welcome messages.
+        $corefields = user_get_default_fields();
 
-    private function get_default_fields() {
-        $defaultfields = array('username', 'fullname', 'firstname', 'lastname', 'email',
-            'address', 'phone1', 'phone2', 'icq', 'skype', 'yahoo', 'aim', 'msn', 'department',
-            'institution', 'interests', 'idnumber', 'lang', 'timezone', 'description',
-            'city', 'url', 'country'
-        );
+        // Fields from core that make sense in a welcome email template.
+        $templatefields = [
+            'username', 'fullname', 'firstname', 'lastname', 'email',
+            'address', 'phone1', 'phone2', 'department',
+            'institution', 'interests', 'idnumber', 'lang', 'timezone',
+            'description', 'city', 'country',
+        ];
 
-        return $defaultfields;
+        return array_values(array_intersect($templatefields, $corefields));
     }
 
-    private function get_welcome_fields() {
-        $welcomefields = array('sitelink', 'sitename', 'resetpasswordlink');
-
-        return $welcomefields;
+    /**
+     * Get the list of welcome-specific template fields.
+     *
+     * These are site-level fields not tied to a user profile.
+     *
+     * @return array List of welcome field names.
+     */
+    private function get_welcome_fields(): array {
+        return ['sitelink', 'sitename', 'resetpasswordlink'];
     }
 
-    private function get_custom_fields() {
+    /**
+     * Get the list of custom profile field shortnames.
+     *
+     * @return array List of custom profile field shortnames.
+     */
+    private function get_custom_fields(): array {
         $customfields = profile_get_custom_fields(true);
         $returnfields = array();
         foreach ($customfields as $field) {
@@ -69,7 +113,13 @@ class message {
         return $returnfields;
     }
 
-    public function get_user_default_values($user) {
+    /**
+     * Get default profile field values for a user.
+     *
+     * @param \stdClass $user The user object.
+     * @return array Associative array of field name => value.
+     */
+    public function get_user_default_values($user): array {
         $values = array();
         foreach ($this->defaultfields as $field) {
             if (isset($user->$field)) {
@@ -87,7 +137,13 @@ class message {
         return $values;
     }
 
-    public function get_user_custom_values($user) {
+    /**
+     * Get custom profile field values for a user.
+     *
+     * @param \stdClass $user The user object.
+     * @return array Associative array of field shortname => value.
+     */
+    public function get_user_custom_values($user): array {
         $userinfo = profile_user_record($user->id);
         $values = array();
         foreach ($this->customfields as $field) {
@@ -101,7 +157,12 @@ class message {
         return $values;
     }
 
-    public function get_welcome_values() {
+    /**
+     * Get values for welcome-specific template fields.
+     *
+     * @return array Associative array of field name => rendered value.
+     */
+    public function get_welcome_values(): array {
         global $SITE;
 
         $values = array();
@@ -115,7 +176,17 @@ class message {
         return $values;
     }
 
-    public function replace_values($user, $message) {
+    /**
+     * Replace all template placeholders in a message string.
+     *
+     * Replaces [[fieldname]] placeholders with actual values from the user
+     * profile, custom profile fields, and welcome fields.
+     *
+     * @param \stdClass $user The user object.
+     * @param string $message The message template containing [[field]] placeholders.
+     * @return string The message with all placeholders replaced.
+     */
+    public function replace_values($user, $message): string {
         $cususervars = $this->get_user_custom_values($user);
         $defuservars = $this->get_user_default_values($user);
 
