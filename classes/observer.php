@@ -37,7 +37,6 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class observer {
-
     /**
      * Send welcome email to a newly created user and optionally notify a moderator.
      *
@@ -101,9 +100,13 @@ class observer {
         }
 
         if (!empty($messagemoderator) && !empty($sender->email) && $messagemoderatorenabled) {
-            email_to_user($moderator, $sender, $messagemoderatorsubject,
-                html_to_text($messagemoderator), $messagemoderator);
+            email_to_user(
+                $moderator,
+                $sender,
+                $messagemoderatorsubject,
+                html_to_text($messagemoderator),
+                $messagemoderator
+            );
         }
     }
-
 }

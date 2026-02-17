@@ -37,9 +37,9 @@ $PAGE->set_pagelayout('admin');
 $PAGE->set_title(get_string('pluginname', 'local_welcome'));
 $PAGE->navbar->add(get_string('pluginname', 'local_welcome'));
 
-$tableheader = array(
+$tableheader = [
     get_string('fieldname', 'local_welcome'),
-    get_string('yourvalue', 'local_welcome'));
+    get_string('yourvalue', 'local_welcome')];
 
 $customfields = $welcome->customfields;
 $customvalues = $welcome->get_user_custom_values($USER);
@@ -49,7 +49,7 @@ $tablecustom = new html_table();
 $tablecustom->head = $tableheader;
 
 foreach ($customfields as $field) {
-    $tablecustom->data[] = array('[['.$field.']]', $customvalues[$field]);
+    $tablecustom->data[] = ['[[' . $field . ']]', $customvalues[$field]];
 }
 
 // Moodle welcome template Fields.
@@ -57,7 +57,7 @@ $tablewelcome = new html_table();
 $tablecustom->head = $tableheader;
 
 foreach ($welcome->welcomefields as $field) {
-    $tablewelcome->data[] = array('[['.$field.']]', $welcome->welcomevalues[$field]);
+    $tablewelcome->data[] = ['[[' . $field . ']]', $welcome->welcomevalues[$field]];
 }
 
 // Moodle default user template Fields.
@@ -66,10 +66,10 @@ $tabledefault->head = $tableheader;
 $userdefaultvalues = $welcome->get_user_default_values($USER);
 
 foreach ($welcome->defaultfields as $field) {
-    $tabledefault->data[] = array('[['.$field.']]', $userdefaultvalues[$field]);
+    $tabledefault->data[] = ['[[' . $field . ']]', $userdefaultvalues[$field]];
 }
 
-$editurl = new moodle_url('/admin/settings.php', array('section' => 'local_welcome'));
+$editurl = new moodle_url('/admin/settings.php', ['section' => 'local_welcome']);
 
 echo $OUTPUT->header();
 

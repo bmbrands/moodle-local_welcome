@@ -42,7 +42,6 @@ require_once($CFG->dirroot . '/user/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class message {
-
     /** @var array Default user profile field names. */
     public $defaultfields;
 
@@ -106,7 +105,7 @@ class message {
      */
     private function get_custom_fields(): array {
         $customfields = profile_get_custom_fields(true);
-        $returnfields = array();
+        $returnfields = [];
         foreach ($customfields as $field) {
             $returnfields[] = $field->shortname;
         }
@@ -120,7 +119,7 @@ class message {
      * @return array Associative array of field name => value.
      */
     public function get_user_default_values($user): array {
-        $values = array();
+        $values = [];
         foreach ($this->defaultfields as $field) {
             if (isset($user->$field)) {
                 $values[$field] = $user->$field;
@@ -145,7 +144,7 @@ class message {
      */
     public function get_user_custom_values($user): array {
         $userinfo = profile_user_record($user->id);
-        $values = array();
+        $values = [];
         foreach ($this->customfields as $field) {
             $fieldname = $field;
             if (isset($userinfo->$fieldname)) {
@@ -165,11 +164,13 @@ class message {
     public function get_welcome_values(): array {
         global $SITE;
 
-        $values = array();
+        $values = [];
         $sitelink = \html_writer::link(new \moodle_url('/'), $SITE->fullname);
         $sitename = $SITE->fullname;
         $resetpasswordlink = \html_writer::link(
-            new \moodle_url('/login/forgot_password.php'), get_string('resetpass', 'local_welcome'));
+            new \moodle_url('/login/forgot_password.php'),
+            get_string('resetpass', 'local_welcome')
+        );
         foreach ($this->welcomefields as $field) {
             $values[$field] = $$field;
         }
@@ -191,17 +192,16 @@ class message {
         $defuservars = $this->get_user_default_values($user);
 
         foreach ($this->defaultfields as $field) {
-            $message = str_replace('[['.$field.']]', $defuservars[$field], $message);
+            $message = str_replace('[[' . $field . ']]', $defuservars[$field], $message);
         }
 
         foreach ($this->customfields as $field) {
-            $message = str_replace('[['.$field.']]', $cususervars[$field], $message);
+            $message = str_replace('[[' . $field . ']]', $cususervars[$field], $message);
         }
 
         foreach ($this->welcomefields as $field) {
-            $message = str_replace('[['.$field.']]', $this->welcomevalues[$field], $message);
+            $message = str_replace('[[' . $field . ']]', $this->welcomevalues[$field], $message);
         }
         return $message;
-
     }
 }

@@ -25,7 +25,6 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) {
-
     $moderator = get_admin();
     $site = get_site();
 
@@ -44,7 +43,7 @@ if ($hassiteconfig) {
     $title = get_string('auth_plugins', 'local_welcome');
     $description = get_string('auth_plugins_desc', 'local_welcome');
     $auths = get_enabled_auth_plugins();
-    $authlist = array();
+    $authlist = [];
     foreach ($auths as $auth) {
         $authlist[$auth] = $auth;
     }

@@ -38,8 +38,7 @@ require_once($CFG->dirroot . '/user/lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers     \local_welcome\message
  */
-class message_test extends \advanced_testcase {
-
+final class message_test extends \advanced_testcase {
     /**
      * Test that the message class can be instantiated.
      */
@@ -64,8 +63,11 @@ class message_test extends \advanced_testcase {
         $corefields = user_get_default_fields();
 
         foreach ($message->defaultfields as $field) {
-            $this->assertContains($field, $corefields,
-                "Field '{$field}' should exist in core user_get_default_fields()");
+            $this->assertContains(
+                $field,
+                $corefields,
+                "Field '{$field}' should exist in core user_get_default_fields()"
+            );
         }
     }
 
@@ -79,8 +81,11 @@ class message_test extends \advanced_testcase {
         $deprecatedfields = ['icq', 'skype', 'yahoo', 'aim', 'msn', 'url'];
 
         foreach ($deprecatedfields as $field) {
-            $this->assertNotContains($field, $message->defaultfields,
-                "Deprecated field '{$field}' should not be in default fields");
+            $this->assertNotContains(
+                $field,
+                $message->defaultfields,
+                "Deprecated field '{$field}' should not be in default fields"
+            );
         }
     }
 
@@ -94,8 +99,11 @@ class message_test extends \advanced_testcase {
         $expectedfields = ['username', 'fullname', 'firstname', 'lastname', 'email', 'city', 'country'];
 
         foreach ($expectedfields as $field) {
-            $this->assertContains($field, $message->defaultfields,
-                "Expected field '{$field}' should be in default fields");
+            $this->assertContains(
+                $field,
+                $message->defaultfields,
+                "Expected field '{$field}' should be in default fields"
+            );
         }
     }
 
@@ -275,8 +283,10 @@ class message_test extends \advanced_testcase {
 
         $message = new message();
 
-        $this->assertStringContainsString('forgot_password.php',
-            $message->welcomevalues['resetpasswordlink']);
+        $this->assertStringContainsString(
+            'forgot_password.php',
+            $message->welcomevalues['resetpasswordlink']
+        );
     }
 
     /**
