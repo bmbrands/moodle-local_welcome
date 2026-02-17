@@ -4,6 +4,16 @@ license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
 CHANGES
 
+version 2026021701 (Release 3.1):
+
+- Added separate welcome messages per authentication method, allowing different
+  email templates for each auth plugin. Thanks to Andrei Bautu!
+- Added composer.json for Composer-based installations. Thanks to Andrei Bautu!
+- Added GitHub Actions CI workflow (moodle-plugin-ci) for automated code
+  checking and testing. Thanks to Andrei Bautu!
+- Added GitHub Actions workflow for automatic plugin release to the Moodle
+  Plugins directory when a tag is pushed.
+
 version 2026021700 (Release 3.0):
 
 - Updated for Moodle 4.5 compatibility (requires Moodle 4.5+).
