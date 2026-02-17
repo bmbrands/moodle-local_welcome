@@ -139,18 +139,24 @@ class message {
     /**
      * Get custom profile field values for a user.
      *
+     * Uses profile_get_user_fields_with_data() to properly format
+     * all field types (dates, checkboxes, etc.) via display_data().
+     *
      * @param \stdClass $user The user object.
      * @return array Associative array of field shortname => value.
      */
     public function get_user_custom_values($user): array {
-        $userinfo = profile_user_record($user->id);
+        $userinfo = profile_get_user_fields_with_data($user->id);
         $values = [];
         foreach ($this->customfields as $field) {
-            $fieldname = $field;
-            if (isset($userinfo->$fieldname)) {
-                $values[$field] = $userinfo->$fieldname;
-            } else {
-                $values[$field] = '';
+            $values[$field] = '';
+
+            foreach ($userinfo as $uio) {
+                if ($uio->field->shortname == $field) {
+                    $values[$field] = $uio->display_data();
+                    break;
+                }
+
             }
         }
         return $values;
