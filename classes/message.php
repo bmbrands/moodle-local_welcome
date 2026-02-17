@@ -156,7 +156,6 @@ class message {
                     $values[$field] = $uio->display_data();
                     break;
                 }
-
             }
         }
         return $values;
